@@ -2,4 +2,4 @@ name: Abhishek Kumar
 markdown: abkumar
 =======
 theme: jekyll-theme-cayman
-
+permalink: /blog/:year/:month/:day/:title
