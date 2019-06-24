@@ -4,38 +4,38 @@ title: "rescan the increased fc lun size in RHEL"
 date: 2018-08-04
 ---
 
-[root@oxygen ~]# multipath -ll mpathb
-mpathb (9mxD76oL/xPu9FBVIItP6wFFt9Y23/A7Lw73wOd9bLRb) dm-0 DGC,VRAID
-size=200G features='1 queue_if_no_path' hwhandler='1 emc' wp=rw
-|-+- policy='round-robin 0' prio=1 status=active
-| |- 1:0:1:1  sdk  8:160  active ready running
-| `- 2:0:1:1  sdaa 65:160 active ready running
-`-+- policy='round-robin 0' prio=0 status=enabled
-  |- 1:0:0:1  sdc  8:32   active ready running
-  `- 2:0:0:1  sds  65:32  active ready running
-[root@oxygen ~]# echo 1 > /sys/block/sdk/device/rescan
-[root@oxygen ~]# echo 1 > /sys/block/sdaa/device/rescan
-[root@oxygen ~]# echo 1 > /sys/block/sdc/device/rescan
-[root@oxygen ~]# echo 1 > /sys/block/sds/device/rescan
-[root@oxygen ~]# multipathd -k
-multipathd> resize map mpathb
-ok
-multipathd>
-[root@oxygen ~]# multipath -ll mpathb
-mpathb (9mxD76oL/xPu9FBVIItP6wFFt9Y23/A7Lw73wOd9bLRb) dm-0 DGC,VRAID
-size=700G features='1 queue_if_no_path' hwhandler='1 emc' wp=rw
-|-+- policy='round-robin 0' prio=1 status=enabled
-| |- 1:0:1:1  sdk  8:160  active ready running
-| `- 2:0:1:1  sdaa 65:160 active ready running
-`-+- policy='round-robin 0' prio=0 status=enabled
-  |- 1:0:0:1  sdc  8:32   active ready running
-  `- 2:0:0:1  sds  65:32  active ready running
-[root@oxygen ~]# pvs
-  PV                   VG       Fmt  Attr PSize   PFree 
-  /dev/mapper/mpathb   datavg   lvm2 a--  200.00g      0 
-[root@oxygen ~]# pvresize  /dev/mapper/mpathb
-  Physical volume "/dev/mapper/mpathb" changed
-  1 physical volume(s) resized / 0 physical volume(s) not resized
-[root@oxygen ~]# pvs
-  PV                   VG       Fmt  Attr PSize   PFree 
-  /dev/mapper/mpathb   datavg   lvm2 a--  700.00g 500.00g
+[root@oxygen ~]# multipath -ll mpathb<br>
+mpathb (9mxD76oL/xPu9FBVIItP6wFFt9Y23/A7Lw73wOd9bLRb) dm-0 DGC,VRAID<br>
+size=200G features='1 queue_if_no_path' hwhandler='1 emc' wp=rw<br>
+|-+- policy='round-robin 0' prio=1 status=active<br>
+| |- 1:0:1:1  sdk  8:160  active ready running<br>
+| `- 2:0:1:1  sdaa 65:160 active ready running<br>
+`-+- policy='round-robin 0' prio=0 status=enabled<br>
+  |- 1:0:0:1  sdc  8:32   active ready running<br>
+  `- 2:0:0:1  sds  65:32  active ready running<br>
+[root@oxygen ~]# echo 1 > /sys/block/sdk/device/rescan<br>
+[root@oxygen ~]# echo 1 > /sys/block/sdaa/device/rescan<br>
+[root@oxygen ~]# echo 1 > /sys/block/sdc/device/rescan<br>
+[root@oxygen ~]# echo 1 > /sys/block/sds/device/rescan<br>
+[root@oxygen ~]# multipathd -k<br>
+multipathd> resize map mpathb<br>
+ok<br>
+multipathd><br>
+[root@oxygen ~]# multipath -ll mpathb<br>
+mpathb (9mxD76oL/xPu9FBVIItP6wFFt9Y23/A7Lw73wOd9bLRb) dm-0 DGC,VRAID<br>
+size=700G features='1 queue_if_no_path' hwhandler='1 emc' wp=rw<br>
+|-+- policy='round-robin 0' prio=1 status=enabled<br>
+| |- 1:0:1:1  sdk  8:160  active ready running<br>
+| `- 2:0:1:1  sdaa 65:160 active ready running<br>
+`-+- policy='round-robin 0' prio=0 status=enabled<br>
+  |- 1:0:0:1  sdc  8:32   active ready running<br>
+  `- 2:0:0:1  sds  65:32  active ready running<br>
+[root@oxygen ~]# pvs<br>
+  PV                   VG       Fmt  Attr PSize   PFree <br>
+  /dev/mapper/mpathb   datavg   lvm2 a--  200.00g      0 <br>
+[root@oxygen ~]# pvresize  /dev/mapper/mpathb<br>
+  Physical volume "/dev/mapper/mpathb" changed<br>
+  1 physical volume(s) resized / 0 physical volume(s) not resized<br>
+[root@oxygen ~]# pvs<br>
+  PV                   VG       Fmt  Attr PSize   PFree <br>
+  /dev/mapper/mpathb   datavg   lvm2 a--  700.00g 500.00g<br>
