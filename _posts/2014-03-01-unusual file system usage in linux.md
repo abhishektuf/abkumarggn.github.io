@@ -4,7 +4,7 @@ title: "unusual file system usage in linux"
 date: 2014-03-01
 ---
 
-If you ever come across a situation where the df command and du commands reporting different size of the same file system. The main cause of this are the files being written by applications after the files have been deleted by users on the file system. du/ls command will not show these files. Hence the conflict between du and df. You can view those files using lsof |grep deleted command. Then you can kill those processes or restart the concerned application to reclaim space.
+If you ever come across a situation where the df command and du commands reporting different size of the same file system. The main cause of this are the files being written by applications after the files have been deleted by users on the file system. du/ls command will not show these files. Hence the conflict between du and df. You can view those files using lsof &#124; grep deleted command. Then you can kill those processes or restart the concerned application to reclaim space.
 
 # df -h
 Filesystem Size Used Avail Use% Mounted on <br>
