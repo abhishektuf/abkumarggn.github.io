@@ -3,7 +3,38 @@ layout: post
 title: "monitoring linux host with sar utility"
 date: 2019-06-25
 ---
+This post is related to sysstat(System Activity Reporter) utilty to view/generate historical performance data of a Linux server.
 
+Installation is simple using your distribution's package manager 
+
+<h3>for CentOS/RHEL based servers</h3>
+{% highlight language %}
+sudo yum install sysstat
+{% endhighlight %}
+for Ubuntu/Debian based servers
+{% highlight language %}
+sudo apt install sysstat
+{% endhighlight %}
+
+now enable the data capture by modifying the file per below.
+{% highlight language %}
+root@abhishek-jumpbox:~# cat /etc/default/sysstat
+#
+# Default settings for /etc/init.d/sysstat, /etc/cron.d/sysstat
+# and /etc/cron.daily/sysstat files
+#
+
+# Should sadc collect system activity informations? Valid values
+# are "true" and "false". Please do not put other values, they
+# will be overwritten by debconf!
+ENABLED="true"
+{% endhighlight %}
+now enable & start the sysstat service in systemd.
+{% highlight language %}
+sudo systemctl enable sysstat
+Synchronizing state of sysstat.service with SysV service script with /lib/systemd/systemd-sysv-install.
+sudo systemctl start sysstat
+{% endhighlight %}
 <h3>you can use sar to monitor your Linux system effectively.
 
 use the below command to redirect output to a file. i.e. to save data for that email to customer :)</h3>
@@ -26,6 +57,21 @@ Linux 4.15.0-43-generic (abhishek-jumpbox)      06/25/2019      _x86_64_        
 Average:        all      0.03      0.00      0.02      0.09      0.00     99.86
 root@abhishek-jumpbox:~#
 
+{% endhighlight %}
+
+<h3>cpu stats using sar</h3>
+{% highlight language %}
+root@abhishek-jumpbox:~# sar -u 2 5
+Linux 4.15.0-43-generic (abhishek-jumpbox)      06/25/2019      _x86_64_        (8 CPU)
+
+11:46:18 AM     CPU     %user     %nice   %system   %iowait    %steal     %idle
+11:46:20 AM     all      0.00      0.00      0.00      0.00      0.00    100.00
+11:46:22 AM     all      0.00      0.00      0.06      0.00      0.00     99.94
+11:46:24 AM     all      0.06      0.00      0.00      0.00      0.00     99.94
+11:46:26 AM     all      0.00      0.00      0.06      0.00      0.00     99.94
+11:46:28 AM     all      0.00      0.00      0.00      0.00      0.00    100.00
+Average:        all      0.01      0.00      0.03      0.00      0.00     99.96
+root@abhishek-jumpbox:~#
 {% endhighlight %}
 
 <h3>memory stats using sar</h3>
@@ -57,4 +103,33 @@ Average:        loop1      0.00      0.00      0.00      0.00      0.00      0.0
 Average:        loop2      0.00      0.00      0.00      0.00      0.00      0.00      0.00      0.00
 Average:          vda      0.00      0.00      0.00      0.00      0.00      0.00      0.00      0.00
 
+{% endhighlight %}
+
+<h3>check run queue length</h3>
+{% highlight language %}
+root@abhishek-jumpbox:~# sar -q 2 2
+Linux 4.15.0-43-generic (abhishek-jumpbox)      06/25/2019      _x86_64_        (8 CPU)
+
+11:48:06 AM   runq-sz  plist-sz   ldavg-1   ldavg-5  ldavg-15   blocked
+11:48:08 AM         0       214      0.00      0.00      0.00         0
+11:48:10 AM         0       215      0.00      0.00      0.00         0
+Average:            0       214      0.00      0.00      0.00         0
+root@abhishek-jumpbox:~#
+{% endhighlight %}
+
+<h3>check network stats</h3>
+{% highlight language %}
+root@abhishek-jumpbox:~# sar -n DEV 1 1
+Linux 4.15.0-43-generic (abhishek-jumpbox)      06/25/2019      _x86_64_        (8 CPU)
+
+11:48:56 AM     IFACE   rxpck/s   txpck/s    rxkB/s    txkB/s   rxcmp/s   txcmp/s  rxmcst/s   %ifutil
+11:48:57 AM   docker0      0.00      0.00      0.00      0.00      0.00      0.00      0.00      0.00
+11:48:57 AM      eth0      0.00      0.00      0.00      0.00      0.00      0.00      0.00      0.00
+11:48:57 AM        lo      0.00      0.00      0.00      0.00      0.00      0.00      0.00      0.00
+
+Average:        IFACE   rxpck/s   txpck/s    rxkB/s    txkB/s   rxcmp/s   txcmp/s  rxmcst/s   %ifutil
+Average:      docker0      0.00      0.00      0.00      0.00      0.00      0.00      0.00      0.00
+Average:         eth0      0.00      0.00      0.00      0.00      0.00      0.00      0.00      0.00
+Average:           lo      0.00      0.00      0.00      0.00      0.00      0.00      0.00      0.00
+root@abhishek-jumpbox:~#
 {% endhighlight %}
