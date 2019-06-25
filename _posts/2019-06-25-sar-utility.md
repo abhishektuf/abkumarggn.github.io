@@ -56,7 +56,8 @@ root@localhost:~#
 
 {% endhighlight %}
 
-cpu stats using sar
+cpu stats using sar, notice the two parameters after the switch -u, first number denotes the interval of stats capture, second number signifies the count of the stats capture. This example capture the CPU stats in every 2 seconds and 5 times.
+
 {% highlight language %}
 root@localhost:~# sar -u 2 5
 Linux 4.15.0-43-generic (localhost)      06/25/2019      _x86_64_        (8 CPU)
