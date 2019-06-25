@@ -4,7 +4,7 @@ title: "nic bonding / teaming in centos 7"
 date: 2015-12-22
 ---
 
-list all available NICs
+<h3>list all available NICs</h3>
 
 {% highlight language %}
 # nmcli -p dev status
@@ -27,7 +27,7 @@ lo      loopback  unmanaged  --
 #nmcli connection add type bond-slave ifname ens224 master bond0
 {% endhighlight %}
 
-activate the newly created bond /team connection
+<h3>activate the newly created bond /team connection</h3>
 {% highlight language %}
 #nmcli c u bond0
 Connection successfully activated (D-Bus active path: /org/freedesktop/NetworkManager/ActiveConnection/3)
