@@ -35,12 +35,12 @@ sudo systemctl enable sysstat
 Synchronizing state of sysstat.service with SysV service script with /lib/systemd/systemd-sysv-install.
 sudo systemctl start sysstat
 {% endhighlight %}
-<h3>use the below command to redirect output to a file. i.e. to save data for that email to customer :)</h3>
+use the below command to redirect output to a file. i.e. to save data for that email to customer :)
 {% highlight language %}
 [root@localhost ~]# sar 2 4 -o /tmp/sardata > /dev/null 2>&1
 {% endhighlight %}
 
-<h3>use the below one to read that file too.</h3>
+use the below one to read that file too.
 {% highlight language %}
 root@localhost:~# sar -f /tmp/sardata
 Linux 4.15.0-43-generic (localhost)      06/25/2019      _x86_64_        (8 CPU)
@@ -56,7 +56,7 @@ root@localhost:~#
 
 {% endhighlight %}
 
-<h3>cpu stats using sar</h3>
+cpu stats using sar
 {% highlight language %}
 root@localhost:~# sar -u 2 5
 Linux 4.15.0-43-generic (localhost)      06/25/2019      _x86_64_        (8 CPU)
@@ -71,7 +71,7 @@ Average:        all      0.01      0.00      0.03      0.00      0.00     99.96
 root@localhost:~#
 {% endhighlight %}
 
-<h3>memory stats using sar</h3>
+memory stats using sar
 
 {% highlight language %}
 root@localhost:~# sar -r 1 1
@@ -82,9 +82,8 @@ Linux 4.15.0-43-generic (localhost)      06/25/2019      _x86_64_        (8 CPU)
 Average:     31672024  32185736   1267344      3.85    182316    641832    827932      2.37    720796    244316         0
 {% endhighlight %}
 
-<h3>disk stats using sar</h3>
+disk stats using sar
 {% highlight language %}
-[root@oxygen ~]# sar -d -p 1 1
 root@localhost:~# sar -d -p 1 1
 Linux 4.15.0-43-generic (localhost)      06/25/2019      _x86_64_        (8 CPU)
 
@@ -102,7 +101,7 @@ Average:          vda      0.00      0.00      0.00      0.00      0.00      0.0
 
 {% endhighlight %}
 
-<h3>check run queue length</h3>
+check run queue length
 {% highlight language %}
 root@localhost:~# sar -q 2 2
 Linux 4.15.0-43-generic (localhost)      06/25/2019      _x86_64_        (8 CPU)
@@ -114,7 +113,7 @@ Average:            0       214      0.00      0.00      0.00         0
 root@localhost:~#
 {% endhighlight %}
 
-<h3>check network stats</h3>
+check network stats
 {% highlight language %}
 root@localhost:~# sar -n DEV 1 1
 Linux 4.15.0-43-generic (localhost)      06/25/2019      _x86_64_        (8 CPU)
