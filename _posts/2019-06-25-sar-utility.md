@@ -7,7 +7,7 @@ This post is related to sysstat(System Activity Reporter) utilty to view/generat
 
 Installation is simple using your distribution's package manager 
 
-<h3>for CentOS/RHEL based servers</h3>
+for CentOS/RHEL based servers
 {% highlight language %}
 sudo yum install sysstat
 {% endhighlight %}
@@ -18,7 +18,7 @@ sudo apt install sysstat
 
 now enable the data capture by modifying the file per below.
 {% highlight language %}
-root@abhishek-jumpbox:~# cat /etc/default/sysstat
+root@localhost:~# cat /etc/default/sysstat
 #
 # Default settings for /etc/init.d/sysstat, /etc/cron.d/sysstat
 # and /etc/cron.daily/sysstat files
@@ -35,18 +35,15 @@ sudo systemctl enable sysstat
 Synchronizing state of sysstat.service with SysV service script with /lib/systemd/systemd-sysv-install.
 sudo systemctl start sysstat
 {% endhighlight %}
-<h3>you can use sar to monitor your Linux system effectively.
-
-use the below command to redirect output to a file. i.e. to save data for that email to customer :)</h3>
+<h3>use the below command to redirect output to a file. i.e. to save data for that email to customer :)</h3>
 {% highlight language %}
 [root@localhost ~]# sar 2 4 -o /tmp/sardata > /dev/null 2>&1
-root@abhishek-jumpbox:~# sar 1 1 -o /tmp/sardata > /dev/null 2>&1
 {% endhighlight %}
 
 <h3>use the below one to read that file too.</h3>
 {% highlight language %}
-root@abhishek-jumpbox:~# sar -f /tmp/sardata
-Linux 4.15.0-43-generic (abhishek-jumpbox)      06/25/2019      _x86_64_        (8 CPU)
+root@localhost:~# sar -f /tmp/sardata
+Linux 4.15.0-43-generic (localhost)      06/25/2019      _x86_64_        (8 CPU)
 
 10:49:37 AM     CPU     %user     %nice   %system   %iowait    %steal     %idle
 10:49:38 AM     all      0.00      0.00      0.00      0.00      0.00    100.00
@@ -55,14 +52,14 @@ Linux 4.15.0-43-generic (abhishek-jumpbox)      06/25/2019      _x86_64_        
 10:50:39 AM     all      0.01      0.00      0.01      0.00      0.00     99.98
 10:50:40 AM     all      0.00      0.00      0.00      0.00      0.00    100.00
 Average:        all      0.03      0.00      0.02      0.09      0.00     99.86
-root@abhishek-jumpbox:~#
+root@localhost:~#
 
 {% endhighlight %}
 
 <h3>cpu stats using sar</h3>
 {% highlight language %}
-root@abhishek-jumpbox:~# sar -u 2 5
-Linux 4.15.0-43-generic (abhishek-jumpbox)      06/25/2019      _x86_64_        (8 CPU)
+root@localhost:~# sar -u 2 5
+Linux 4.15.0-43-generic (localhost)      06/25/2019      _x86_64_        (8 CPU)
 
 11:46:18 AM     CPU     %user     %nice   %system   %iowait    %steal     %idle
 11:46:20 AM     all      0.00      0.00      0.00      0.00      0.00    100.00
@@ -71,14 +68,14 @@ Linux 4.15.0-43-generic (abhishek-jumpbox)      06/25/2019      _x86_64_        
 11:46:26 AM     all      0.00      0.00      0.06      0.00      0.00     99.94
 11:46:28 AM     all      0.00      0.00      0.00      0.00      0.00    100.00
 Average:        all      0.01      0.00      0.03      0.00      0.00     99.96
-root@abhishek-jumpbox:~#
+root@localhost:~#
 {% endhighlight %}
 
 <h3>memory stats using sar</h3>
 
 {% highlight language %}
-root@abhishek-jumpbox:~# sar -r 1 1
-Linux 4.15.0-43-generic (abhishek-jumpbox)      06/25/2019      _x86_64_        (8 CPU)
+root@localhost:~# sar -r 1 1
+Linux 4.15.0-43-generic (localhost)      06/25/2019      _x86_64_        (8 CPU)
 
 10:52:07 AM kbmemfree   kbavail kbmemused  %memused kbbuffers  kbcached  kbcommit   %commit  kbactive   kbinact   kbdirty
 10:52:08 AM  31672024  32185736   1267344      3.85    182316    641832    827932      2.37    720796    244316         0
@@ -88,8 +85,8 @@ Average:     31672024  32185736   1267344      3.85    182316    641832    82793
 <h3>disk stats using sar</h3>
 {% highlight language %}
 [root@oxygen ~]# sar -d -p 1 1
-root@abhishek-jumpbox:~# sar -d -p 1 1
-Linux 4.15.0-43-generic (abhishek-jumpbox)      06/25/2019      _x86_64_        (8 CPU)
+root@localhost:~# sar -d -p 1 1
+Linux 4.15.0-43-generic (localhost)      06/25/2019      _x86_64_        (8 CPU)
 
 10:52:29 AM       DEV       tps     rkB/s     wkB/s   areq-sz    aqu-sz     await     svctm     %util
 10:52:30 AM     loop0      0.00      0.00      0.00      0.00      0.00      0.00      0.00      0.00
@@ -107,20 +104,20 @@ Average:          vda      0.00      0.00      0.00      0.00      0.00      0.0
 
 <h3>check run queue length</h3>
 {% highlight language %}
-root@abhishek-jumpbox:~# sar -q 2 2
-Linux 4.15.0-43-generic (abhishek-jumpbox)      06/25/2019      _x86_64_        (8 CPU)
+root@localhost:~# sar -q 2 2
+Linux 4.15.0-43-generic (localhost)      06/25/2019      _x86_64_        (8 CPU)
 
 11:48:06 AM   runq-sz  plist-sz   ldavg-1   ldavg-5  ldavg-15   blocked
 11:48:08 AM         0       214      0.00      0.00      0.00         0
 11:48:10 AM         0       215      0.00      0.00      0.00         0
 Average:            0       214      0.00      0.00      0.00         0
-root@abhishek-jumpbox:~#
+root@localhost:~#
 {% endhighlight %}
 
 <h3>check network stats</h3>
 {% highlight language %}
-root@abhishek-jumpbox:~# sar -n DEV 1 1
-Linux 4.15.0-43-generic (abhishek-jumpbox)      06/25/2019      _x86_64_        (8 CPU)
+root@localhost:~# sar -n DEV 1 1
+Linux 4.15.0-43-generic (localhost)      06/25/2019      _x86_64_        (8 CPU)
 
 11:48:56 AM     IFACE   rxpck/s   txpck/s    rxkB/s    txkB/s   rxcmp/s   txcmp/s  rxmcst/s   %ifutil
 11:48:57 AM   docker0      0.00      0.00      0.00      0.00      0.00      0.00      0.00      0.00
@@ -131,5 +128,5 @@ Average:        IFACE   rxpck/s   txpck/s    rxkB/s    txkB/s   rxcmp/s   txcmp/
 Average:      docker0      0.00      0.00      0.00      0.00      0.00      0.00      0.00      0.00
 Average:         eth0      0.00      0.00      0.00      0.00      0.00      0.00      0.00      0.00
 Average:           lo      0.00      0.00      0.00      0.00      0.00      0.00      0.00      0.00
-root@abhishek-jumpbox:~#
+root@localhost:~#
 {% endhighlight %}
